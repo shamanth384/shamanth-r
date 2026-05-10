@@ -1,0 +1,63 @@
+{
+  "entities": {
+    "User": {
+      "title": "User Profile",
+      "description": "User account information",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "displayName": { "type": "string" },
+        "email": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "email"]
+    },
+    "Booking": {
+      "title": "Consultation Booking",
+      "description": "A booking for a credit risk consultation",
+      "type": "object",
+      "properties": {
+        "bookingId": { "type": "string" },
+        "userId": { "type": "string" },
+        "topic": { "type": "string", "enum": ["Project Review", "Credit Modeling", "EDA Strategy"] },
+        "date": { "type": "string" },
+        "time": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending", "confirmed", "cancelled"] },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "topic", "date", "time"]
+    },
+    "CreditRecord": {
+      "title": "Credit Risk Record",
+      "description": "A manual entry for credit risk analysis",
+      "type": "object",
+      "properties": {
+        "recordId": { "type": "string" },
+        "userId": { "type": "string" },
+        "age": { "type": "number" },
+        "income": { "type": "number" },
+        "loanAmount": { "type": "number" },
+        "creditScore": { "type": "number" },
+        "status": { "type": "string", "enum": ["Approved", "Denied", "Defaulted"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "age", "income", "loanAmount", "creditScore", "status"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profiles"
+    },
+    "/bookings/{bookingId}": {
+      "schema": "Booking",
+      "description": "Consultation bookings"
+    },
+    "/credit_records/{recordId}": {
+      "schema": "CreditRecord",
+      "description": "Manual credit risk data entries"
+    }
+  }
+}
